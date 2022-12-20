@@ -25,7 +25,7 @@ export class App extends Component {
   notify = (msg, params) => toast(msg, params);
 
   render() {
-    const { query, page } = this.state;
+    const { query } = this.state;
     return (
       <Container>
         <Searchbar setImageQuery={this.setImageQuery} />

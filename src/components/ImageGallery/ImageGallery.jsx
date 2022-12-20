@@ -27,7 +27,7 @@ export class ImageGallery extends Component {
     const { query: prevQuery } = prevProps;
     const { query } = this.props;
     const { page: prevPage } = prevState;
-    const { page, images } = this.state;
+    const { page } = this.state;
     if (query !== prevQuery) {
       try {
         this.setState({ isLoading: true });
