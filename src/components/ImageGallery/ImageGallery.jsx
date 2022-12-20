@@ -21,13 +21,14 @@ export class ImageGallery extends Component {
     isLoading: false,
     showModal: false,
     modalImageIdx: 0,
+    scrollBy: false,
   };
 
   async componentDidUpdate(prevProps, prevState) {
     const { query: prevQuery } = prevProps;
     const { query } = this.props;
     const { page: prevPage } = prevState;
-    const { page } = this.state;
+    const { page, scrollBy } = this.state;
     if (query !== prevQuery) {
       try {
         this.setState({ isLoading: true });
@@ -56,7 +57,7 @@ export class ImageGallery extends Component {
       try {
         this.setState({ isLoading: true });
         const { hits } = await fetchPixabayImages(query, page);
-        this.setState({ images: [...prevState.images, ...hits] });
+        this.setState({ images: [...prevState.images, ...hits], scrollBy: true });
       } catch (error) {
         this.props.notification(`Something went wrong! ${error.message}`, {
           icon: '😱',
@@ -66,6 +67,13 @@ export class ImageGallery extends Component {
           isLoading: false,
         });
       }
+    }
+    if (scrollBy) {
+      window.scrollBy({
+        top: window.innerHeight - 200,
+        behavior: 'smooth',
+      });
+      this.setState({ scrollBy: false });
     }
   }
 
